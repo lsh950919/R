@@ -1,0 +1,10 @@
+F5 - run all code
+F9 - run current line of code
+
+SHOW con_name; -> shows name of CDB
+SELECT con_id, name FROM v$pdbs\SHOW pdbs; -> shows information about PDB
+
+CREATE TABLESPACE (tablespace name) DATAFILE (data location) SIZE (size) AUTOEXTEND ON NEXT (size) MAXSIZE UNLIMITED
+ - SIZE refers to initial size of table space, AUTOEXTEND refers to extending after max size, MAXSIZE UNLIMITED
+has a limit of 13GB
+
