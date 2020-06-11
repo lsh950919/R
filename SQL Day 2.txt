@@ -1,0 +1,143 @@
+6/10/20
+
+SQL Commands, Select Command, and Operators & Expressions
+
+
+COMMANDS
+
+Lecture 2-1: SQL Commands
+
+SQL Commands:
+DDL - create, drop, alter, truncate table, rename
+DML - select, insert, update, delete, merge
+TCL - commit, rollback
+DCL - grant, revoke
+ * difference between truncate table and delete - truncate table delete all data in table and cannot be recovered, whereas deleted data using delete can be recovered using rollback
+
+-- - single line comment
+/*/ /*/ - multi-line comment
+
+DDL Commands:
+CREATE TABLE (table name)(
+	col1 type null/not null,
+	col2 type null/not null, ...etc.
+); - creating a table
+
+DESC (table name); - show characteristic of all columns in table
+
+SELECT *
+FROM (table name); - show all columns (select *) of table
+
+ALTER TABLE (table name)
+ - MODIFY (col name type/null or not null) - change characteristic of specified column
+ - ADD (col name type) - add a new column with col name and type (not null can also be included)
+ - RENAME COLUMN (col name) TO (col name new) - change name of column to new column name
+ - DROP COLUMN (col name) - erase column
+
+DROP TABLE (table name) - erase the table and its data
+
+Creating Primary Key:
+1. CREATE TABLE (table name) (
+	col1 type primary key, ...);
+2. CREATE TABLE (table name) (
+	col1 type,
+	col2 type not null, ...etc.
+	primary key(col1));
+3. ALTER TABLE (table name)
+   ADD CONSTRAINTS (primary key name) PRIMARY KEY (col name);
+ - 3rd method adds a name to the primary key - used when we have multiple tables and multiple primary keys
+
+
+Lecture 2-2
+
+SELECT */(col name), (col name), etc.
+FROM (table name)
+WHERE (condition)
+ORDER BY (col name) ASC/DESC
+ - view all/specified columns in table
+ - WHERE specifies condition to filter data, ORDER BY ascending or descending order
+ - if multiple tables are used, separate names by ,
+EX.
+1. SELECT employee_id, first_name, last_name, salary
+   FROM employees - show 4 specified columns only from emp table
+2. SELECT *
+   FROM employees
+   WHERE employee_id = 100/salary >= 5000/employee_id > 150 AND job_id = 'ST_CLERK - filter out by criteria
+3. SELECT employee_id, first_name, last_name, salary
+   FROM employees
+   WHERE salary >= 5000
+   ORDER BY salary DESC/2, 3 desc - filter data first, then order out by descending order of salary/order first by 2nd column of specified (first_name), then order that data again by 3rd column (last_name) in descending order
+ - if we specify 4 columns but write ORDER BY 2, 3, 5, this gives error since there is no column 5. if the column is not specified, we can use column name to order, but meaningless since we cannot see the result of ordering
+ - null always comes last in order
+
+
+Lecture 2-3
+
+Operators:
++/-, *//, || (concatenation)
+
+SELECT 1+1 as (alias name) FROM dual - we add an alias to the result, which shows up as a column name (as can be omitted
+ - SELECT first_name || ' ' || last_name full_name - concatenate first name and last name with a space and name the resulting vector full name (as is omitted in this case)
+
+Comparison Operators:
+=/!=, </>, <=/>=, BETWEEN...AND, AND/OR, IS, NOT
+ - we can convert salary >= 3000 and salary <= 5000 to salary between 3000 and 5000 (smaller number MUST come first), but we cannot use 5000 >= salary >= 3000
+ - NOT cannot be used for numbers (salary not 3000 is not possible, must be salary != 3000 or not (salary = 3000))
+ - with null values, IS and NOT can only be used (col1 = null gives error, must be col1 is null)
+
+Other Operators:
+1. LIKE - return rows that satisfy partial constraint (start with, end with, contains)
+ - ex. WHERE last_name LIKE 'a%'/'%a'/'%a%' (start, end, middle)
+2. IN - returns when item is in a list of constraints
+ - ex. WHERE job_id IN/NOT IN ('IT_PROG', 'AD_VP', 'FI_ACCOUNT')
+
+Case - same as if - else statement in python
+ - Form: SELECT ...,
+		CASE WHEN (condition1) THEN (value1)
+		     WHEN (condition2) THEN (value2)
+		     ELSE (value 3)
+		END (new col name)
+	 FROM (table name);
+ - the output values must all be of same type (number, string, etc.) or it will give error
+
+ROWNUM - new column is automatically inserted into the result, with unique numbers starting from 1 is given
+ - SELECT employee_id, first_name, last_name, rownum
+   FROM employees;
+ - SELECT employee_id, first_name, last_name
+   FROM employees
+   WHERE rownum <= 5; - this gives 5 rows which rownums are from 1-5 but the order is random
+   * if we want to sort out the list first and select the top rows,
+     SELECT *
+     FROM (
+	   SELECT *
+	   FROM employees
+	   ORDER BY salary DESC
+	  )
+     WHERE rownum <= 5; - this process sorts out the table first under FROM, then gives rownum and filter out the first five, which will be the top 5 salary receivers
+
+
+
+
+CONCEPT
+
+
+Lecture 2-1
+
+SQL: Structured Query Language
+
+when performing operations that does not use data/table, from dual must be included in code
+
+Types of SQL:
+1. DDL - Data Definition Language - used to make/change/remove objects (tables, indexes, etc.)
+2. DML - Data Manipulation Language - view/insert/change/remove data inside objects
+3. TCL - Transaction Control Language - controls transactions of data
+4. DCL - Data Control Language - controls access to privileges/roles
+
+Lecture 2-2
+
+Select command - command used to view data in table
+ - the most often used command in SQL
+ - we can contrain the data to view using WHERE, and change the order of data using ORDER BY
+
+ERD (Entity Relationship Diagram) - explains connections between tables
+
