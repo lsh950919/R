@@ -23,6 +23,8 @@ class(e)
 e # no apostrophes since it is not a string
 c
 
+c = c('한국', '미국', '대만', '일본', '한국', '일본', '중국', '미국', '대만', '미국')
+e = factor(c, levels = c('한국', '미국', '일본', '중국', '대만'))
 as.integer(e) # gives numbers of their levels, but removes the text connected to the levels
 ### factors can be used for data that has multiple repeats
 
@@ -232,7 +234,7 @@ lst2[2] # if only one [] is used, it ALWAYS prints the result out as a list
 lst2[[4]] # gives the list in itself
 lst2[[4]]$b[2:4] #slicing the list inside the list
 lst2[[4]][[2]][2:4] # this gives the same result as above
-lst2[[4]]$[a,c] ########## be sure to remember to ask the question
+lst2[[4]]$a # only one name can be used for $
 
 # Data Frames
 ### lengths of all vectors must be equal. if not equal, gives a list instead
